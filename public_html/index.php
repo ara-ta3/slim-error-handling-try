@@ -27,8 +27,21 @@ $app->get('/', function () {
     echo "Hello world";
 });
 
+$app->get('/notfound', function() use ($app) {
+    $app->notFound();
+});
+
 $app->get('/error', function() {
     throw new Exception();
+});
+
+$app->get('/error/wazato', function() use ($app) {
+    try {
+        throw new \Exception('わざとのえらー');
+    } catch( \Exception $e ) {
+        $app->error($e);
+    }
+    echo 'ここには来ない';
 });
 
 // 実行
